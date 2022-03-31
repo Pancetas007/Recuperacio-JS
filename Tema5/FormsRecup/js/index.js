@@ -59,6 +59,7 @@ function validarDocumento() {
 }
 
 function validar(e) {
+    debugger;
     e.preventDefault();
     if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento()) {
         return true;
@@ -69,8 +70,7 @@ function validar(e) {
 
 function error2(element, missatge) {
     var li = document.getElementsByTagName("li")[0];
-    document.getElementById("").innerHTML = missatge;
-    element.focus();
+    document.getElementById("error").innerHTML = missatge;
     console.log(element);
 }
 
@@ -82,20 +82,20 @@ function validarPAS() {
     if (expresioPAS.test(pas)) {
         return true;
     } else {
-        error2(pas, "El DNI introduït NO és correcte!");
+        error2(pas, "El Passaport introduït NO és correcte!");
         return false;
     }
 }
 
 function validarNIE() {
-    var expresioNIE = new RegExp("((([X-Z])|([LM])){1}([-]?)((\d){7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]))");
+    var expresioNIE = new RegExp(/((([X-Z])|([LM])){1}([-]?)((\d){7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]))/);
 
     var nie = document.getElementById("documento").value;
 
     if (expresioNIE.test(nie)) {
         return true;
     } else {
-        error2(nie, "El DNI introduït NO és correcte!");
+        error2(nie, "El NIE introduït NO és correcte!");
         return false;
     }
 }
@@ -104,6 +104,7 @@ function validarDNI() {
     var expresioDNI = new RegExp(/^\d{8}[A-Z]{1}$/);
 
     var dni = document.getElementById("documento").value;
+    console.log(dni)
 
     if (expresioDNI.test(dni)) {
         if (validarLletraDNI() == false) {
@@ -118,7 +119,7 @@ function validarDNI() {
 }
 
 function validarLletraDNI() {
-    var dni = document.getElementById("document").value;
+    var dni = document.getElementById("documento").value;
     var numeros = dni.substring(0, dni.length - 1);
     var lletraDni = dni.charAt(8);
     console.log(lletraDni);
