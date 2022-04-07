@@ -59,7 +59,6 @@ function validarDocumento() {
 }
 
 function validar(e) {
-    debugger;
     e.preventDefault();
     if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento()) {
         return true;
@@ -69,13 +68,12 @@ function validar(e) {
 }
 
 function error2(element, missatge) {
-    var li = document.getElementsByTagName("li")[0];
     document.getElementById("error").innerHTML = missatge;
     console.log(element);
 }
 
 function validarPAS() {
-    var expresioPAS = new RegExp(/^[a-zA-Z1-0 ]{1,60}$/);
+    var expresioPAS = new RegExp(/^[a-zA-Z]{5,20}$/);
 
     var pas = document.getElementById("documento").value;
 

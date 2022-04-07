@@ -52,7 +52,7 @@
   <!-- Text input -->
   <div class="form-outline mb-4">
     <label class="form-label" for="empresa">Empresa</label>
-    <input type="text" id="empresa" class="form-control" pattern="^[a-zA-Z1 ]{1,60}$"/>
+    <input type="text" id="empresa" class="form-control" pattern="^\w{1,60}$"/>
   </div>
 
     <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -80,7 +80,7 @@
   <!-- Text input -->
   <div class="form-outline mb-4">
       <label class="form-label" for="direccion">Dirección</label>
-      <input type="text" id="direccion" class="form-control" />
+      <input type="text" id="direccion" class="form-control" pattern="^\w{5,50}$" required/>
   </div>
 
 <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -88,14 +88,14 @@
   <div class="col">
     <div class="form-outline">
       <label class="form-label" for="cp">Código postal</label>
-      <input type="text" id="cp" class="form-control" />
+      <input type="text" id="cp" class="form-control" pattern="^\d{5}$" required/>
       
     </div>
   </div>
   <div class="col">
     <div class="form-outline">
       <label class="form-label" for="poblacion">Población</label>
-      <input type="text" id="poblacion" class="form-control" />
+      <input type="text" id="poblacion" class="form-control" pattern="^[a-zA-Z ]{2,40}$" required/>
     </div>
   </div>
 </div>
