@@ -58,9 +58,108 @@ function validarDocumento() {
     return true;
 }
 
+function validarDireccion() {
+    var direccion = document.getElementById("direccion");
+    if (!direccion.checkValidity()) {
+        if (direccion.validity.valueMissing) {
+            error2(direccion, "Introdueix una direcció.");
+        }
+        if (direccion.validity.patternMismatch) {
+            error2(direccion, "La direcció introduida NO és correcta!");
+        }
+        return false;
+    }
+    return true;
+}
+
+function validarCP() {
+    var cp = document.getElementById("cp");
+    if (!cp.checkValidity()) {
+        if (cp.validity.valueMissing) {
+            error2(cp, "Introdueix un codic postal.");
+        }
+        if (cp.validity.patternMismatch) {
+            error2(cp, "El codic postal introduit NO és correcte!");
+        }
+        return false;
+    }
+    return true;
+}
+
+function validarPoblacion() {
+    var poblacion = document.getElementById("poblacion");
+    if (!poblacion.checkValidity()) {
+        if (poblacion.validity.valueMissing) {
+            error2(poblacion, "Introdueix una població.");
+        }
+        if (poblacion.validity.patternMismatch) {
+            error2(poblacion, "La població introduida NO és correcta!");
+        }
+        return false;
+    }
+    return true;
+}
+
+function validarCorreu() {
+    var correu = document.getElementById("email");
+    if (!correu.checkValidity()) {
+        if (correu.validity.valueMissing) {
+            error2(correu, "Introdueix un email.");
+        }
+        if (correu.validity.patternMismatch) {
+            error2(correu, "El email introduit NO és correcte!");
+        }
+        return false;
+    }
+    return true;
+}
+
+function validarTlf() {
+    var tlf = document.getElementById("telefono");
+    if (!tlf.checkValidity()) {
+        if (tlf.validity.valueMissing) {
+            error2(tlf, "Introdueix un telèfon.");
+        }
+        if (tlf.validity.patternMismatch) {
+            error2(tlf, "El tèlefon introduit NO és correcte!");
+        }
+        return false;
+    }
+    return true;
+}
+
+function validarData() {
+    debugger;
+    let date = new Date();
+    let output = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+    console.log(output);
+
+    var data = document.getElementById("fechaNacimiento");
+    console.log(data.value);
+
+    var dataValue = data.value;
+
+    var arrayData = dataValue.split("-");
+    console.log(arrayData);
+
+    if (!data.checkValidity()) {
+        if (data.validity.valueMissing) {
+            error2(data, "Introdueix una data.");
+        }
+        if (data.validity.patternMismatch) {
+            error2(data, "La data introduida NO és correcta!");
+        }
+        if (dataValue[0] > date.getFullYear()) {
+            console.log("error");
+        }
+        return false;
+    }
+    return true;
+}
+
 function validar(e) {
     e.preventDefault();
-    if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento()) {
+    if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento() && validarDireccion() && validarCP() && validarPoblacion() && validarCorreu() && validarTlf() && validarData()) {
         return true;
     } else {
         return false;
@@ -102,7 +201,6 @@ function validarDNI() {
     var expresioDNI = new RegExp(/^\d{8}[A-Z]{1}$/);
 
     var dni = document.getElementById("documento").value;
-    console.log(dni)
 
     if (expresioDNI.test(dni)) {
         if (validarLletraDNI() == false) {
@@ -120,7 +218,6 @@ function validarLletraDNI() {
     var dni = document.getElementById("documento").value;
     var numeros = dni.substring(0, dni.length - 1);
     var lletraDni = dni.charAt(8);
-    console.log(lletraDni);
     var resto = numeros % 23;
 
     var lletres = ["T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"];
@@ -128,7 +225,6 @@ function validarLletraDNI() {
     lletres = lletres.join("");
 
     var dniCorrecte = lletres.charAt(resto);
-    console.log(dniCorrecte);
 
     if (lletraDni == dniCorrecte) {
         return true;

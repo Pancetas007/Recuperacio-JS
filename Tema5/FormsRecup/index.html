@@ -103,20 +103,20 @@
 <!-- Text input -->
 <div class="form-outline mb-4">
   <label class="form-label" for="email">Email</label>
-  <input type="email" id="email" class="form-control" />
+  <input type="email" id="email" class="form-control" pattern="^[\w]+@{1}[\w]+\.+[a-z]{2,3}$" required/>
 </div>
   <!-- Email input -->
   <div class="row mb-4">
     <div class="col">
       <div class="form-outline">
         <label class="form-label" for="telefono">Teléfono</label>
-        <input type="text" id="telefono" class="form-control" />
+        <input type="text" id="telefono" class="form-control" pattern="^\d{3}\s\d{3}\s\d{3}$"/>
       </div>
     </div>
    <div class="col">
       <div class="form-outline">
         <label class="form-label" for="fechaNacimiento">Fecha Nacimiento</label>
-        <input type="date" id="fechaNacimiento" class="form-control" />
+        <input type="date" id="fechaNacimiento" class="form-control" pattern="^([0-2][0-9]|3[0-1])(\/)(0[1-9]|1[0-2])\2(\d{4})$" required/>
       </div>
     </div>
 </div>
@@ -149,13 +149,13 @@
     <div class="col">
       <div class="form-outline">
         <label class="form-label" for="contrasenya">Contraseña</label>
-        <input type="text" id="contrasenya" class="form-control" />
+        <input type="text" id="contrasenya" class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-_])[A-Za-z\d@$!%*#?&-_]{8,}$" required/>
       </div>
     </div>
     <div class="col">
       <div class="form-outline">
         <label class="form-label" for="contrasenya2">Repite contraseña</label>
-        <input type="text" id="contrasenya2" class="form-control" />
+        <input type="text" id="contrasenya2" class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-_])[A-Za-z\d@$!%*#?&-_]{8,}$" required/>
       </div>
     </div>
   </div>
@@ -174,6 +174,7 @@
       value=""
       id="confirmar"
       checked
+      required
     />
     <label class="form-check-label" for="Cofirmar"> Crear  la  cuenta? </label>
   </div>
