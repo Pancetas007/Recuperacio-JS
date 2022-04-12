@@ -115,6 +115,7 @@ function validarCorreu() {
 }
 
 function validarTlf() {
+   
     var tlf = document.getElementById("telefono");
     if (!tlf.checkValidity()) {
         if (tlf.validity.valueMissing) {
@@ -129,19 +130,20 @@ function validarTlf() {
 }
 
 function validarData() {
-    debugger;
-    let date = new Date();
-    let output = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
-    console.log(output);
+    
+    let dataActual = new Date();
 
     var data = document.getElementById("fechaNacimiento");
     console.log(data.value);
 
-    var dataValue = data.value;
+    var dataNaiximent = new Date(data.value);
+    
 
-    var arrayData = dataValue.split("-");
-    console.log(arrayData);
-
+    //var arrayData = dataValue.split("-");
+    let dataAnys= new Date (dataActual - dataNaiximent);
+    let anys = dataAnys.getFullYear() - 1970;
+    console.log(anys) 
+   
     if (!data.checkValidity()) {
         if (data.validity.valueMissing) {
             error2(data, "Introdueix una data.");
@@ -149,8 +151,8 @@ function validarData() {
         if (data.validity.patternMismatch) {
             error2(data, "La data introduida NO és correcta!");
         }
-        if (dataValue[0] > date.getFullYear()) {
-            console.log("error");
+        if (anys  < 16) {
+            console.log("errormenot de 16 anys");
         }
         return false;
     }
@@ -159,6 +161,7 @@ function validarData() {
 
 function validar(e) {
     e.preventDefault();
+    esborrarError();
     if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento() && validarDireccion() && validarCP() && validarPoblacion() && validarCorreu() && validarTlf() && validarData()) {
         return true;
     } else {
@@ -167,8 +170,24 @@ function validar(e) {
 }
 
 function error2(element, missatge) {
+
     document.getElementById("error").innerHTML = missatge;
+    element.className="form-control border-danger";
+    element.focus();
     console.log(element);
+}
+
+function esborrarError() {
+    var formulari = document.forms[0];
+
+    for(var i = 0; i < formulari.elements.length-2; i++) {
+        console.log(formulari.elements[i].type);
+        if (formulari.elements[i].type=="radio"){
+        formulari.elements[i].className="form-check-input";
+        }else{
+        formulari.elements[i].className="form-control";
+        }
+    }
 }
 
 function validarPAS() {
