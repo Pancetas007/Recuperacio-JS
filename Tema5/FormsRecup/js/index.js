@@ -2,6 +2,7 @@ window.onload = main;
 
 function main() {
     document.getElementById("enviar").addEventListener("click", validar);
+    esborrarError();
 }
 
 function validarNom() {
@@ -195,10 +196,20 @@ function validarContra() {
     return true;
 }
 
+function validarCaptcha() {
+    var check = document.getElementById("confirmar");
+    if (check.checked) {
+        return true;
+    }else{
+        error2(check, "Has de acceptar aquest camp");
+        return false;
+    }
+}
+
 function validar(e) {
     e.preventDefault();
     esborrarError();
-    if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento() && validarDireccion() && validarCP() && validarPoblacion() && validarCorreu() && validarTlf() && validarData() && validarGenero() && validarContra()) {
+    if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento() && validarDireccion() && validarCP() && validarPoblacion() && validarCorreu() && validarTlf() && validarData() && validarGenero() && validarContra() && validarCaptcha()) {
         return true;
     } else {
         return false;
@@ -206,9 +217,8 @@ function validar(e) {
 }
 
 function error2(element, missatge) {
-    var div = document.createElement("div");
-    div.id = "error";
-    div.className = "card bg-danger text-white";
+    var div = document.getElementById("error");
+    div.style.display="block";
 
     var h5 = document.createElement("h5");
     h5.className = "card-title ml-5";
@@ -225,10 +235,6 @@ function error2(element, missatge) {
     div.appendChild(h5);
     div.appendChild(div2);
 
-    var container = document.getElementsByTagName("div")[0];
-    container.appendChild(div)
-    document.body.appendChild(container);
-
     li.textContent = missatge;
     element.className="form-control border-danger";
     element.focus();
@@ -238,11 +244,11 @@ function esborrarError() {
     var formulari = document.forms[0];
 
     var errors = document.getElementById("error");
+    errors.style.display="none";
 
     while (errors.firstChild) {
         errors.removeChild(errors.firstChild);
     }
-    errors.remove();
 
     for(var i = 0; i < formulari.elements.length-2; i++) {
         if (formulari.elements[i].type=="radio"){
