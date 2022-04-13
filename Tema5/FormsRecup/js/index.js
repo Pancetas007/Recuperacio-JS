@@ -115,7 +115,6 @@ function validarCorreu() {
 }
 
 function validarTlf() {
-   
     var tlf = document.getElementById("telefono");
     if (!tlf.checkValidity()) {
         if (tlf.validity.valueMissing) {
@@ -130,19 +129,11 @@ function validarTlf() {
 }
 
 function validarData() {
-    
-    let dataActual = new Date();
-
     var data = document.getElementById("fechaNacimiento");
-    console.log(data.value);
-
+    let dataActual = new Date();
     var dataNaiximent = new Date(data.value);
-    
-
-    //var arrayData = dataValue.split("-");
     let dataAnys= new Date (dataActual - dataNaiximent);
     let anys = dataAnys.getFullYear() - 1970;
-    console.log(anys) 
    
     if (!data.checkValidity()) {
         if (data.validity.valueMissing) {
@@ -151,10 +142,55 @@ function validarData() {
         if (data.validity.patternMismatch) {
             error2(data, "La data introduida NO és correcta!");
         }
+        return false;
+    }else{
         if (anys  < 16) {
-            console.log("errormenot de 16 anys");
+            error2(data, "No tens la edad mínima establerta")
+            return false;
+        }
+    }
+    return true;
+}
+
+function validarGenero() {
+    var radio = document.getElementsByClassName("form-check-input");
+    if(document.getElementById("generoMujer").checked){
+        return true;
+    }else if (document.getElementById("generoHombre").checked){
+        return true;
+    }else if(document.getElementById("generoOtro").checked){
+        return true;
+    }else if(document.getElementById("generoSingenero").checked){
+        return true;
+    }else{
+        error2(radio, "Seleccione alguna opció");
+        return false;
+    }
+}
+
+function validarContra() {
+    var contra = document.getElementById("contrasenya");
+    var repContra = document.getElementById("contrasenya2");
+    if (!contra.checkValidity()) {
+        if (contra.validity.valueMissing) {
+            error2(contra, "Introdueix la contrasenya.");
+        }
+        if (contra.validity.patternMismatch) {
+            error2(contra, "La contrasenya introduida NO és correcta!");
         }
         return false;
+    }
+    if (!repContra.checkValidity()) {
+        if (repContra.validity.valueMissing) {
+            error2(repContra, "Introdueix la segona contrasenya.");
+        }
+        if (repContra.validity.patternMismatch) {
+            error2(repContra, "La segona contrasenya introduida NO és correcta!");
+        }
+        return false;
+    }
+    if (repContra.value != contra.value) {
+        error2(repContra, "Les contrasenyes introduides NO coincideixen!");
     }
     return true;
 }
@@ -162,7 +198,7 @@ function validarData() {
 function validar(e) {
     e.preventDefault();
     esborrarError();
-    if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento() && validarDireccion() && validarCP() && validarPoblacion() && validarCorreu() && validarTlf() && validarData()) {
+    if (validarNom() && validarApellidos() && validarEmpresa() && validarDocumento() && validarDireccion() && validarCP() && validarPoblacion() && validarCorreu() && validarTlf() && validarData() && validarGenero() && validarContra()) {
         return true;
     } else {
         return false;
@@ -170,18 +206,45 @@ function validar(e) {
 }
 
 function error2(element, missatge) {
+    var div = document.createElement("div");
+    div.id = "error";
+    div.className = "card bg-danger text-white";
 
-    document.getElementById("error").innerHTML = missatge;
+    var h5 = document.createElement("h5");
+    h5.className = "card-title ml-5";
+    h5.textContent = "Errores encontrados en el formulario"
+
+    var div2 = document.createElement("div");
+    div2.className = "card-body ml-3"
+
+    var li = document.createElement("li");
+    var ul = document.createElement("ul");
+
+    li.appendChild(ul);
+    div2.appendChild(li);
+    div.appendChild(h5);
+    div.appendChild(div2);
+
+    var container = document.getElementsByTagName("div")[0];
+    container.appendChild(div)
+    document.body.appendChild(container);
+
+    li.textContent = missatge;
     element.className="form-control border-danger";
     element.focus();
-    console.log(element);
 }
 
 function esborrarError() {
     var formulari = document.forms[0];
 
+    var errors = document.getElementById("error");
+
+    while (errors.firstChild) {
+        errors.removeChild(errors.firstChild);
+    }
+    errors.remove();
+
     for(var i = 0; i < formulari.elements.length-2; i++) {
-        console.log(formulari.elements[i].type);
         if (formulari.elements[i].type=="radio"){
         formulari.elements[i].className="form-check-input";
         }else{
@@ -189,7 +252,6 @@ function esborrarError() {
         }
     }
 }
-
 function validarPAS() {
     var expresioPAS = new RegExp(/^[a-zA-Z]{5,20}$/);
 
